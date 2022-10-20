@@ -12,14 +12,14 @@ import dotenv from "dotenv";
 
 dotenv.config();
 axios.defaults.baseURL = "https://app-pi-demo-food.herokuapp.com";
-const root = ReactDOM.createRoot(document.getElementById('root'));
-console.log("Gola")
-root.render(
+
+ReactDOM.render(
   <Provider store={store}>
   <BrowserRouter>
     <App />
   </BrowserRouter>
-  </Provider>
+  </Provider>,
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
