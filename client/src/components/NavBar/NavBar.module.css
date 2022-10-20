@@ -1,0 +1,123 @@
+.container{
+    background-color: darkred;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-wrap: nowrap;
+    position: fixed;
+    z-index: 100;
+    
+}
+
+.subcontainer1{
+    width: 50%;
+    height: auto;
+    /* background-color: darkcyan; */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px;
+}
+.image{
+    width: 50px;
+}
+.image:hover{
+    cursor: pointer;
+}
+.span{
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1.5em;
+    padding: 0px 10px 0px 10px;
+    width: 200px;
+}
+.subbutton{
+    /* background-color: darkgreen; */
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    padding-left: 93px;
+}
+
+.refress{
+    width: auto;
+    background-color: transparent;
+    height: 60px;
+    color: white;
+    border: none;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0px 15px 0px 5px;
+    text-shadow: 2px 5px 5px black;
+}
+.refress:hover{
+    cursor: pointer;
+    color:black;
+}
+.created{
+    width: 170px;
+    height: 60px;
+    padding: 0px;   
+    margin: 0px 15px 0px 5px;
+}
+
+.created button{
+    padding: 0px;
+    border:none;
+    width: 100%;
+    height: 60px;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: transparent;
+    text-shadow: 2px 5px 5px black;
+}
+.created button:hover{
+    cursor: pointer;
+    color:black;
+}
+
+
+.subcontainer2{
+    width: 50%;
+    height: auto;
+    /* background-color: darkgray; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+.subcontainer2 input{
+    background-color: transparent;
+    color: white;
+    border: 1px solid black;
+    width: 180px;
+    border-radius: 0px 15px 0px 15px;
+    box-shadow: 2px 4px 5px black;
+    padding-left: 10px;
+    margin: 10px;
+    height: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.subcontainer2 button{
+    background-color: transparent;
+    color: white;
+    border: 1px solid black;
+    width: 80px;
+    height: 20px;
+    border-radius: 0px 15px 0px 15px;
+    box-shadow: 2px 4px 5px black;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.subcontainer2 button:hover{
+    background-color: black;
+    color: darkred;
+    cursor: pointer;
+}
