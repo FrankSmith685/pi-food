@@ -13,7 +13,7 @@ import dotenv from "dotenv";
 dotenv.config();
 axios.defaults.baseURL = "https://app-pi-demo-food.herokuapp.com";
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
+console.log("Gola")
 root.render(
   <Provider store={store}>
   <BrowserRouter>
