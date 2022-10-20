@@ -4,6 +4,11 @@ import {LadingPage} from './components/LadingPage/LadingPage.jsx';
 import { Home } from './components/Home/Home';
 import { DetailsRecipe } from './components/DetailsRecipe/DetailsRecipe';
 import { CreateRecipe } from './components/CreateRecipe/CreateRecipe';
+require('dotenv').config();
+const {
+  REACT_APP_API
+} = process.env;
+
 
 function App() {
   return (

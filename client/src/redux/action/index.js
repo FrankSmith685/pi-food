@@ -11,10 +11,16 @@ export const GET_DETAIL_RECIPES="GET_DETAIL_RECIPES";
 export const POST_RECIPES="POST_RECIPES";
 export const LIMPIE_DETALLE="LIMPIE_DETALLE";
 
+require('dotenv').config();
+const {
+    REACT_APP_API
+} = process.env;
+
+
 //METODO=> TRAER TODOS LOS RECIPES
 export  const getAllRecipe=()=>{
     return async(dispatch)=>{
-        const json=await axios.get("http://localhost:3001/recipes/");
+        const json=await axios.get("/recipes/");
         return dispatch({
             type:GET_ALL_RECIPES,
             payload:json.data
@@ -26,7 +32,7 @@ export  const getAllRecipe=()=>{
 export const getAllRecipeByName=(name)=>{
     return (dispatch)=>{
         
-        axios.get(`http://localhost:3001/recipes/?name=${name}`)
+        axios.get(`/recipes/?name=${name}`)
         .then(res=>{
             if(!res.data.length<=0){
                 return dispatch({
@@ -51,7 +57,7 @@ export const getAllRecipeByDiets=(payload)=>{
 //METODO=> FILTRAR TODAS LAS DIETAS
 export const getAllDiets=()=>{
     return async(dispatch)=>{
-        const json=await axios.get("http://localhost:3001/diets/");
+        const json=await axios.get("/diets/");
             return dispatch({
                 type:GET_ALL_DIETS,
                 payload:json.data
@@ -86,7 +92,7 @@ export const getOrderByHealthScore=(payload)=>{
 export const getDetailRecipe=(id)=>{
     try{
         return async(dispatch)=>{
-            var json=await axios.get(`http://localhost:3001/recipes/${id}`);
+            var json=await axios.get(`/recipes/${id}`);
             return dispatch({
                 type:GET_DETAIL_RECIPES,
                 payload:json.data
@@ -100,7 +106,7 @@ export const getDetailRecipe=(id)=>{
 //METODO => CREAR UN NUEVO RECIPE
 export const postRecipe=(payload)=>{
     return async(dispatch)=>{
-        await axios.post("http://localhost:3001/recipes/",payload)
+        await axios.post("/recipes/",payload)
         .then(res=>{
             return dispatch({
                 type:POST_RECIPES,
