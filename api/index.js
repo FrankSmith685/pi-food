@@ -27,7 +27,7 @@ const {
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
-  server.listen('3001', async() => {
+  server.listen(PORT, async() => {
     await getDataApi();
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
