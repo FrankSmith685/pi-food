@@ -26,7 +26,7 @@ export default function App() {
         
         <Route path="/home" element={
           <>
-              {loading?<p>CARGANDO....</p>:<>
+              {loading?<Home/>:<>
               
               <Home/>
               </>
