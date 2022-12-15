@@ -20,10 +20,14 @@
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const { getDataApi } = require('./src/utils/getDiet.js');
+require('dotenv').config();
+const {
+    PORT,
+  } = process.env;
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
-  server.listen(3001, async() => {
+  server.listen('3001', async() => {
     await getDataApi();
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });

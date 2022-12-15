@@ -1,58 +1,112 @@
-import { GET_ALL_DIETS, GET_ALL_RECIPES, GET_ALL_RECIPE_BY_DIET, GET_ALL_RECIPE_BY_NAME, GET_ALL_RECIPE_EXISTENT_AND_CREATED, GET_DETAIL_RECIPES, GET_ORDER_BY_HEALTHSCORE, GET_ORDER_BY_RECIPE, LIMPIE_DETALLE, POST_RECIPES } from "../action"
+import { GET_ALL_DIETS,GET_ALL_RECIPES, GET_ALL_RECIPE_BY_DIET, GET_ALL_RECIPE_BY_NAME, GET_ALL_RECIPE_EXISTENT_AND_CREATED, GET_DETAIL_RECIPES, GET_ORDER_BY_HEALTHSCORE, GET_ORDER_BY_RECIPE, LIMPIEDETALLE, LOADING, POST_RECIPES,  } from "../actions"
 
 const initialState={
-    recipe:[],
+    recipes:[],
     recipeAll:[],
     recipeExist:[],
-    diet:[],
+    diets:[],
+    loading:true,
     detailRecipe:[]
 }
 
-export const rootReducer=(state=initialState,action)=>{
+export default function rootReducer(state=initialState,action){
     switch (action.type) {
-        //METODO => GET_ALL_RECIPES
         case GET_ALL_RECIPES:
             return{
                 ...state,
-                recipe:action.payload,
+                recipes:action.payload,
                 recipeAll:action.payload,
-                recipeExist:action.payload
+                recipeExist:action.payload,
+                loading:false,
             }
-        //METODO => GET_ALL_RECIPE_BY_NAME
+
+        case GET_ALL_DIETS:
+            return{
+                ...state,
+                diets:action.payload
+            }
         case GET_ALL_RECIPE_BY_NAME:
             return{
                 ...state,
-                recipe:action.payload,
+                recipes:action.payload,
+                pagina:1
             }
-        //METODO => GET_ALL_RECIPE_BY_DIET
-        case GET_ALL_RECIPE_BY_DIET:
-            const allRecipe=state.recipeAll;
-            const newRecipe=[];
-            allRecipe.map((recipe)=>recipe.diet.forEach((diet)=>{
-                if(action.payload===diet){
-                    return newRecipe.push(recipe);
-                }
-            }));
-            if(action.payload==="AllDiets"){
+        
+
+        //METODO=>GET_ORDER_BY_HEALTHSCORE
+        case GET_ORDER_BY_HEALTHSCORE:
+            if(action.payload==="ascHealthScore"){
+                const ascHealthScore=state.recipes.sort((a,b)=>
+                a.healthScore-b.healthScore);
                 return{
                     ...state,
-                    recipe:allRecipe,
-                    recipeExist:allRecipe
+                    recipes:ascHealthScore
+                }
+            }else if(action.payload==="descHealthScore"){
+                const descHealthScore=state.recipes.sort((a,b)=>
+                b.healthScore-a.healthScore);
+                return{
+                    ...state,
+                    recipes:descHealthScore
                 }
             }else{
                 return{
                     ...state,
-                    recipe:newRecipe,
-                    recipeExist:newRecipe
+                    recipes:state.recipes
                 }
             }
-        //METODO => GET_ALL_DIETS
-        case GET_ALL_DIETS:
-            return{
-                ...state,
-                diet:action.payload
+        
+        case GET_ORDER_BY_RECIPE:
+            var order_by_recipe=state.recipes;
+            if(action.payload==="ascRecipe"){
+                const ascRecipe=order_by_recipe.sort((a,b)=>{
+                    if(a.name.toLowerCase().trim()>b.name.toLowerCase().trim()){
+                        return 1;
+                    }else if(a.name.toLowerCase().trim()<b.name.toLowerCase().trim()){
+                        return -1;
+                    }else{
+                        return 0;
+                    }
+                })
+                return{
+                    ...state,
+                    recipes:ascRecipe,
+                    
+                }
             }
-        //METODO => GET_ALL_RECIPE_EXISTENT_AND_CREATED
+            else if(action.payload==="descRecipe"){
+                const descRecipe=order_by_recipe.sort((a,b)=>{
+                    if(a.name.toLowerCase().trim()>b.name.toLowerCase().trim()){
+                        return -1;
+                    }else if(a.name.toLowerCase().trim()<b.name.toLowerCase().trim()){
+                        return 1;
+                    }else{
+                        return 0;
+                    }
+                })
+                return{
+                    ...state,
+                    recipes:descRecipe
+                }
+            }
+            else{ 
+                
+                return{
+                    ...state,
+                    recipes:state.recipes
+                }
+            }
+        
+        //METODO => GET_ALL_RECIPE_BY_DIET
+        case GET_ALL_RECIPE_BY_DIET:
+            
+            const filteredRecipes = state.recipeAll.filter(recipe => !action.payload.some(d => !recipe.diet.includes(d)))
+            
+            return {
+                ...state,
+                recipes:filteredRecipes
+
+            }
         case GET_ALL_RECIPE_EXISTENT_AND_CREATED:
             const getAllRecipes=state.recipeAll; //Me trae todo 
             const recipeExistent=state.recipeExist; //ME trae todo pero se modifica siempre
@@ -77,105 +131,53 @@ export const rootReducer=(state=initialState,action)=>{
             if(action.payload==="created"){
                 return{
                     ...state,
-                    recipe:b
+                    recipes:b
                    }
             }
             else if(action.payload==="existing"){
                 return{
                     ...state,
-                    recipe:a,
+                    recipes:a,
                 }
             }
             else{
                 return{
                     ...state,
-                    recipe:a.concat(b)
+                    recipes:a.concat(b)
                 }
             }
-        //METODO=>GET_ORDER_BY_RECIPE
-        case GET_ORDER_BY_RECIPE:
-            var order_by_recipe=state.recipe;
-            if(action.payload==="ascRecipe"){
-                const ascRecipe=order_by_recipe.sort((a,b)=>{
-                    if(a.name.toLowerCase().trim()>b.name.toLowerCase().trim()){
-                        return 1;
-                    }else if(a.name.toLowerCase().trim()<b.name.toLowerCase().trim()){
-                        return -1;
-                    }else{
-                        return 0;
-                    }
-                })
-                return{
-                    ...state,
-                    recipe:ascRecipe,
-                    
-                }
-            }
-            else if(action.payload==="descRecipe"){
-                const descRecipe=order_by_recipe.sort((a,b)=>{
-                    if(a.name.toLowerCase().trim()>b.name.toLowerCase().trim()){
-                        return -1;
-                    }else if(a.name.toLowerCase().trim()<b.name.toLowerCase().trim()){
-                        return 1;
-                    }else{
-                        return 0;
-                    }
-                })
-                return{
-                    ...state,
-                    recipe:descRecipe
-                }
-            }
-            else{ 
-                
-                return{
-                    ...state,
-                    recipe:state.recipe
-                }
-            }
-        //METODO=>GET_ORDER_BY_HEALTHSCORE
-        case GET_ORDER_BY_HEALTHSCORE:
-            if(action.payload==="ascHealthScore"){
-                const ascHealthScore=state.recipe.sort((a,b)=>
-                a.healthScore-b.healthScore);
-                return{
-                    ...state,
-                    recipe:ascHealthScore
-                }
-            }else if(action.payload==="descHealthScore"){
-                const descHealthScore=state.recipe.sort((a,b)=>
-                b.healthScore-a.healthScore);
-                return{
-                    ...state,
-                    recipe:descHealthScore
-                }
-            }else{
-                return{
-                    ...state,
-                    recipe:state.recipe
-                }
-            }
-        //METODO => GET_DETAIL_RECIPES
-        case GET_DETAIL_RECIPES:
+       //METODO => GET_DETAIL_RECIPES
+       case GET_DETAIL_RECIPES:
+        
             return{
                 ...state,
-                detailRecipe:action.payload
+                detailRecipe:action.payload,
+                loading:false
+            }
+        
+        
+
+        case LIMPIEDETALLE:
+            const detalleLimpio=[];
+            return{
+                ...state,
+                detailRecipe:detalleLimpio,
+                loading:true
+            }
+        
+        case LOADING:
+            return{
+                ...state,
+                loading:action.payload
             }
         //METODO => POST_RECIPES
         case POST_RECIPES:
             return{
                 ...state
             }
-        case LIMPIE_DETALLE:
-                const detalleLimpio=[];
+        default:
             return{
                 ...state,
-                detailRecipe:detalleLimpio
-            }
-
-        default:
-            return {
-                state
             }
     }
 }

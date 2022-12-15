@@ -1,11 +1,16 @@
 const Router=require("express");
 const { getAllRecipes, getAllRecipesByName, getRecipeById, postNewRecipe}=require("../controllers/controllerRecipe.js");
+const { Recipe, Diet } = require("../db.js");
 
 
 const router=Router();
 
 router.get("/", async(req,res)=>{
+    
+    
+
     try{
+        
         const {name}=req.query;
         if(name){
             return res.status(200).json(await getAllRecipesByName(name));

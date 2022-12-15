@@ -2,7 +2,7 @@ const axios=require("axios");
 const { Diet, API_KEY } = require("../db");
 const vegetarian="vegetarian";
 
-const apiurl=`https://84fee11e-fc60-4b1d-b27b-a422a25aa282.mock.pstmn.io/foods`;
+const apiurl=`https://ba56989b-cf8f-4f20-9e41-a3423b2d8ac4.mock.pstmn.io/foods`;
 const getDataApi=async()=>{
     if(!(await Diet.findAll()).length){ //Si en la tabla Diet no existe datos
         const getApi=await axios.get(apiurl); 

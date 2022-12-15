@@ -3,9 +3,9 @@ const { Op } = require("sequelize");
 const {Recipe, Diet, API_KEY} = require("../db.js");
 
 //URL DE LA API
-const apiurl=`https://84fee11e-fc60-4b1d-b27b-a422a25aa282.mock.pstmn.io/foods`;
+const apiurl=`https://ba56989b-cf8f-4f20-9e41-a3423b2d8ac4.mock.pstmn.io/foods`;
 //DATOS DE LA API
-const getDataApi=async()=>{
+const getDataApis=async()=>{
     const getApi=await axios.get(apiurl);
     const getApiInfo=await getApi.data.results.map((recipes)=>{
         //STEP
@@ -59,7 +59,7 @@ const getDataDB=async()=>{
 //CONVINAMOS LOS DATOS DE LA API Y DE LA DB
 //METODO=>GETALLRECIPES
 const getAllRecipes=async()=>{
-    const getAPI=await getDataApi();
+    const getAPI=await getDataApis();
     const getDB=await getDataDB();
     return [...getAPI,...getDB];
 }
@@ -131,6 +131,6 @@ module.exports={
     getAllRecipes,
     getAllRecipesByName,
     getRecipeById,
-    postNewRecipe,
+    postNewRecipe
 
 }

@@ -1,112 +1,83 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetailRecipe, limpieDetalle } from "../../redux/action";
-import { useHistory} from "react-router-dom";
-import style from "../DetailsRecipe/DetailsRecipe.module.css";
+import { Link, useLocation } from "react-router-dom";
+import { getDetailRecipe, limpieDetalle } from "../../redux/actions";
+// import NavBarMain from "../../pages/NavBar/NavBarMain"
 
-export const DetailsRecipe=(props)=>{
+export default function DetailsRecipe(){
+    const location=useLocation();
     const dispatch=useDispatch();
-        const detailsRecipe=useSelector(state=>state.detailRecipe);
-        let history = useHistory();
-        
-        const [state,setState]=useState({
-            loading:true
-        })
+    const detailsRecipe=useSelector(state=>state.detailRecipe);
+    const [state,setState]=useState({
+        loading:true
+    })
     
-        useEffect(()=>{
+    useEffect(()=>{
+        let local=location.pathname;
+        let id=local.split("/");
+        dispatch(getDetailRecipe(id[2]));
+        setState({...state,loading:false});
+        
+        return ()=>{
+            dispatch(limpieDetalle());
             
-                dispatch(getDetailRecipe(props.match.params.id));
-            
-            // setTimeout(() => {
-                setState({...state,loading:false});
-            // }, 1000);
-            
-            return ()=>{
-                dispatch(limpieDetalle());
-            }
-            
-        },[dispatch]);
 
-        function volver() {
-            history.push("/Home");
-          }
+        }
+    },[dispatch,location]);
+
+    const { loading } = useSelector(state => state);
+    console.log(loading);
+// console.log(state.loading)
 
     return(
-        <div>
+        <>
             
-            <div className={style.menu}>
-            <button onClick={()=>volver()}>Volver</button>
-            </div>
-            
-            <div className={style.subcontainerdetalle}>
-                <div>
-                {state.loading ?(
-                <div className={style.cargando}>
-                    {/* <img src={imagen} alt="NOT FOUND" /> */}
-                    <p>Cargando data...</p>
-                    
+                <div className=" w-full p-2 h-auto">
+                <div className="my-1">
+                    <Link to="/home">
+                    <button className="bg-gray-800 w-auto px-2  rounded-xl text-gray-500 font-bold text-base">Go Back</button>
+                    </Link>
                 </div>
-                ): (
-                    <div>
-                        <div className={style.names}>
-                            <div className={style.titleName}>
-                            {detailsRecipe?.name}
-                            </div>
+                {loading===true ? <p>CARGANDO</p>:(
+                    <div key={detailsRecipe.id} className="bg-gray-800 h-full p-2 w-full rounded-xl">
+                    
+                    <div className="bg-gray-600  p-1 rounded-xl">
+                        <h2 className="text-center w-full lg:text-2xl font-bold text-base text-gray-900 p-1 rounded-xl bg-orange-700 lg:bg-transparent">{detailsRecipe.name}</h2>
+                        <div className="flex justify-center items-center w-full mt-2">
+                            <img src={detailsRecipe.image} alt="" className="rounded-xl"/>
                         </div>
-                        <div className={style.container01}>
-                            <div className={style.subcontainer01}>
-                                <div className={style.image}>
-                                    <img src={detailsRecipe?.image} alt="NOT FOUND" />
-                                </div>
-                            </div>
-                            <div className={style.subcontainer02}>
-                                <div className={style.diet}>
-                                    <div className={style.titleDiet}>Diets Type: </div>
-                                    <div>{detailsRecipe?.diet?.map(c=>{
-                                        return(
-                                            <p key={c} className={style.dietas}>-{c}</p>
-                                        )
-                                    })}</div>
-
-                                </div>
-                            </div>
-                            <div className={style.subcontainer03}>
-                                <div className={style.dishType}>
-                                    <div className={style.titleDishType}>Diets Type: </div>
-                                    <div>{detailsRecipe?.dishType?.map(c=>{
-                                        return(
-                                            <p key={c} className={style.dishh}>-{c}</p>
-                                        )
-                                    })}</div>
-
-                                </div>
-
-                            </div>
+                        <div className="bg-gray-800 mt-2 text-gray-400 text-sm p-2 h-auto w-full  rounded-xl">
+                        <p dangerouslySetInnerHTML={{ __html: `${detailsRecipe?.summary}`}}></p>
                         </div>
-                        <div className={style.container02}>
-                            <div className={style.titleHealthScore}>
-                                <span>Health Score:</span> {detailsRecipe?.healthScore}
-                            </div>
+                        <p className=" my-2 w-auto text-center font-bold text-base mx-24 text-gray-900 p-1 rounded-xl bg-red-700 lg:bg-transparent">Health Score: {detailsRecipe.healthScore}</p>
+                        <div className=" h-28 overflow-auto w-full  p-2  mb-auto ">
+                            {detailsRecipe.diet?.map(c=>{
+                                return(
+                                    <p key={c} className=" float-left my-1  bg-gray-700 text-gray-400 font-bold text-sm rounded-xl px-2 mx-1">{c}</p>
+                                )
+                            })}
                         </div>
-                        <div className={style.container03}>
-                            <div className={style.summary}>
-                                <h2>Summary :</h2>
-                                <p dangerouslySetInnerHTML={{ __html: `${detailsRecipe?.summary}`}}></p>
-                            </div>
+                        <div className=" h-20 overflow-auto w-full  p-2  mb-auto ">
+                            {detailsRecipe.dishType?.map(c=>{
+                                return(
+                                    <p key={c} className=" float-left my-1  bg-gray-700 text-gray-400 font-bold text-sm rounded-xl px-2 mx-1">{c}</p>
+                                )
+                            })}
                         </div>
-                        <div className={style.container04}>
-                            <div className={style.step}>
-                            <h2>Steps :</h2>
-                            <p dangerouslySetInnerHTML={{ __html: `${detailsRecipe?.step}`}}></p>
-                            </div>     
+                        
+                    </div>
+                    <div className="bg-gray-600 p-1 mt-2 rounded-xl">
+                        <div className="bg-gray-800 mt-2 text-gray-400 text-sm p-2 h-auto w-full  rounded-xl">
+                            <h2 className="text-center text-lg font-bold text-gray-500">Steps</h2>
+                            <p className="text-sm" dangerouslySetInnerHTML={{ __html: `${detailsRecipe?.step}`}}></p>
                         </div>
                     </div>
-                )
-                }   
                 </div>
+
+                )}
+            </div>
             
-        </div>
-        
-        </div>
+            
+        </>
     )
 }
