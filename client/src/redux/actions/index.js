@@ -13,8 +13,8 @@ export const LIMPIEDETALLE="LIMPIEDETALLE";
 export const POST_RECIPES="POST_RECIPES";
 
 
-const RUTA_DIET="http://localhost:3001/diets/";
-const RUTA_RECIPES="http://localhost:3001/recipes/";
+const RUTA_DIET="https://pi-food-production-c212.up.railway.app/diets/";
+const RUTA_RECIPES="https://pi-food-production-c212.up.railway.app/recipes/";
 
 
 export const getAllRecipes=()=>{
