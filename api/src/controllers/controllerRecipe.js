@@ -3,7 +3,7 @@ const { Op } = require("sequelize");
 const {Recipe, Diet, API_KEY} = require("../db.js");
 
 //URL DE LA API
-const apiurl=`https://ba56989b-cf8f-4f20-9e41-a3423b2d8ac4.mock.pstmn.io/foods`;
+const apiurl=`https://176e7aef-25c7-48ec-99f5-0f5daf723fcd.mock.pstmn.io/foods`;
 //DATOS DE LA API
 const getDataApis=async()=>{
     const getApi=await axios.get(apiurl);
