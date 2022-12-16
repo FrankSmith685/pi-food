@@ -2,9 +2,13 @@
 
 # Individual Project - Henry Food
 
-<p align="right">
-  <img height="200" src="./cooking.png" />
+<p align="center">
+  <img  src="./imagen1.PNG" />
 </p>
+<p align="center">
+  <img  src="./imagen2.PNG" />
+</p>
+-Link: https://pi-food-chi.vercel.app
 
 ## Objetivos del Proyecto
 
