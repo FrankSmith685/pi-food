@@ -67,6 +67,9 @@ En `api` crear un archivo llamado: `.env` que tenga la siguiente forma:
 DB_USER=usuariodepostgres
 DB_PASSWORD=passwordDePostgres
 DB_HOST=localhost
+PORT=3001
+DB_NAME=nameDB
+API_KEY=81f6c43f05234d499e6d0599162d5be4
 ```
 
 Reemplazar `usuariodepostgres` y `passwordDePostgres` con tus propias credenciales para conectarte a postgres. Este archivo va ser ignorado en la subida a github, ya que contiene información sensible (las credenciales).
